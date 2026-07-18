@@ -117,21 +117,7 @@ my_name = "my_bot"
 
 The same nickname is used to identify the bot’s player color and turn order.
 
-### Run in headless mode
 
-By default, the browser is visible:
-
-```python
-browser = playwright.chromium.launch(headless=False)
-```
-
-To run without showing the browser window:
-
-```python
-browser = playwright.chromium.launch(headless=True)
-```
-
-Running visibly is recommended while testing because website layout or selector changes can be easier to diagnose.
 
 ### Change the maximum number of games
 
@@ -144,113 +130,7 @@ if game_num > 100:
 
 Change `100` to another number if needed.
 
-## Project Structure
 
-```text
-.
-├── papergames_connect4_bot_fast.py
-├── README.md
-└── .gitignore
-```
 
-A recommended `.gitignore` is:
 
-```gitignore
-.venv/
-venv/
-__pycache__/
-*.py[cod]
-.DS_Store
-```
 
-## Important Notes
-
-- The bot relies on the current HTML structure and CSS selectors used by PaperGames.io.
-- If the website changes its page layout, class names, text, or buttons, some selectors may need to be updated.
-- Turn detection is based on webpage elements such as `.animated` and `.empty-slot`.
-- The script assumes that light pieces correspond to player `1` and dark pieces correspond to player `2`.
-- Network speed and animations may affect browser timing.
-
-## Troubleshooting
-
-### `ModuleNotFoundError: No module named 'playwright'`
-
-Install Playwright:
-
-```bash
-pip install playwright
-playwright install chromium
-```
-
-### Browser does not open
-
-Make sure Chromium was installed:
-
-```bash
-playwright install chromium
-```
-
-### The bot opens the page but does not click correctly
-
-PaperGames.io may have changed its page structure. Check selectors such as:
-
-```python
-.grid-item
-.empty-slot
-.player
-.circle-light
-.circle-dark
-```
-
-You may also need to increase Playwright timeouts or sleep durations.
-
-### The bot identifies the wrong player
-
-Make sure the nickname in:
-
-```python
-my_name = "dragon"
-```
-
-matches the nickname entered on the website.
-
-### The bot makes moves too quickly
-
-Increase values such as:
-
-```python
-sleep(0.25)
-sleep(0.2)
-```
-
-This can help when the website has slower animations or network delays.
-
-## Limitations
-
-- The evaluation function only counts horizontal two-in-a-row patterns.
-- The bot does not use a transposition table or persistent opening database.
-- The turn detector may sometimes identify a turn too early.
-- The automation is tightly coupled to the current PaperGames.io interface.
-- The bot is not guaranteed to play a mathematically perfect Connect 4 game at its current search depths.
-
-## Possible Improvements
-
-Potential future improvements include:
-
-- Add a transposition table for faster minimax searches
-- Use iterative deepening with a time limit
-- Improve diagonal and vertical pattern evaluation
-- Detect the last move instead of repeatedly reading the entire board
-- Add stronger fork and trap analysis
-- Add logging and screenshots when an interaction fails
-- Move CSS selectors into a configuration file
-- Add automated tests for board logic
-- Package dependencies in a `requirements.txt` file
-
-## Responsible Use
-
-Use this project for learning, experimentation, and browser-automation practice. Make sure your use follows the website’s terms and does not disrupt games or other users.
-
-## License
-
-No license has been selected yet. Add a `LICENSE` file before allowing reuse or redistribution.
